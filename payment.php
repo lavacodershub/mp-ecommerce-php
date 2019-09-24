@@ -5,10 +5,19 @@ require __DIR__ .  '/vendor/autoload.php';
 
 MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-090914-5c508e1b02a34fcce879a999574cf5c9-469485398');
 
+if (isset($_GET['type'])) {
+    $type = @$_GET['type'];
+    $id = @$_GET['id'];
+}
+else {
+    $type = @$_POST['type'];
+    $id = @$_POST['id'];
+}
+
 $payment = FALSE;
-switch($_GET["type"]) {
+switch($type) {
     case "payment":
-        $payment = MercadoPago\Payment::find_by_id($_GET["id"]);
+        $payment = MercadoPago\Payment::find_by_id($id);
         break;
 }
 
