@@ -5,6 +5,10 @@ require __DIR__ .  '/vendor/autoload.php';
 
 MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-090914-5c508e1b02a34fcce879a999574cf5c9-469485398');
 
+$fp = fopen('log.txt', 'a');
+fwrite($fp, var_export($_POST, true));
+fclose($fp);
+
 $payment = FALSE;
 switch($_POST["type"]) {
     case "payment":
