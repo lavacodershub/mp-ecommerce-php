@@ -5,15 +5,27 @@ $reference = $_GET['ref'];
 switch ($status) {
     case 'success':
         $title = 'Compra completada';
-        $text = 'Tu compra fue completada con el código de referencia <strong>'.$reference.'</strong>.<br/>¡Muchas gracias!';
+        $text = 'Tu compra fue completada con el código de referencia <strong>'.$reference.'</strong>.<br/>';
+        $text.= "Método de pago: ".$_GET['type']." ".$_GET['method_id']."<br/>";
+        $text.= "Monto pagado: $ ".number_format($_GET['amount'], 2, ",", ".")."<br/>";
+        $text.= "Identificador de pago: ".$_GET['pid']."<br/>";
+        $text.= "<br/>¡Muchas gracias!";
         break;
     case 'pending':
         $title = 'Compra completada';
-        $text = 'Tu compra fue completada con el código de referencia <strong>'.$reference.'</strong>.<br/><strong>El pago de la misma aún está pendiente</strong>.<br/>Realiza el mismo en los puntos de cobro habilitados para que podamos procesar tu compra.<br/>¡Muchas gracias!';
+        $text = 'Tu compra fue completada con el código de referencia <strong>'.$reference.'</strong>.<br/><strong>El pago de la misma aún está pendiente</strong>.<br/>Realiza el mismo en los puntos de cobro habilitados para que podamos procesar tu compra.<br/>';
+        $text.= "Método de pago: ".$_GET['type']." ".$_GET['method_id']."<br/>";
+        $text.= "Monto pagado: $ ".number_format($_GET['amount'], 2, ",", ".")."<br/>";
+        $text.= "Identificador de pago: ".$_GET['pid']."<br/>";
+        $text.= "<br/>¡Muchas gracias!";
         break;
     case 'in_process':
         $title = 'Compra en proceso';
-        $text = 'Tu compra con el código de referencia <strong>'.$reference.'</strong> aún está en proceso de pago.<br/>Nos comunicaremos a la brevedad si necesitamos más información o si el pago es aprobado.<br/>¡Muchas gracias!';
+        $text = 'Tu compra con el código de referencia <strong>'.$reference.'</strong> aún está en proceso de pago.<br/>Nos comunicaremos a la brevedad si necesitamos más información o si el pago es aprobado.<br/>';
+        $text.= "Método de pago: ".$_GET['type']." ".$_GET['method_id']."<br/>";
+        $text.= "Monto pagado: $ ".number_format($_GET['amount'], 2, ",", ".")."<br/>";
+        $text.= "Identificador de pago: ".$_GET['pid']."<br/>";
+        $text.= "<br/>¡Muchas gracias!";
         break;
     case 'failure':
         $title = 'Tu compra no pudo ser completada';
@@ -23,14 +35,6 @@ switch ($status) {
         $title = 'No fue posible procesar tu compra';
         $text = 'Ocurrió un error mientras intentabamos procesar tu compra. Por favor intenta nuevamente.';
         break;
-}
-
-$details = FALSE;
-if (isset($_SESSION['details'])) {
-    $details = $_SESSION['details'];
-    if (!empty($details)) {
-        $details = json_decode($details);
-    }
 }
 ?>
 
@@ -120,12 +124,6 @@ if (isset($_SESSION['details'])) {
                                     <p style="margin-top:50px; text-align:center; font-size:25px; width:100%; display:block;">
                                         <?php
                                         echo $text;
-                                        echo "<br/><br/>";
-                                        if ($details) {
-                                            echo "Método de pago: ".$details->payment_type." ".$details->payment_method_id."<br/>";
-                                            echo "Monto pagado: $ ".number_format($details->amount, 2, ",", ".")."<br/>";
-                                            echo "Identificador de pago: ".$details->payment_id."<br/>";
-                                        }
                                         ?>
                                     </p>
 

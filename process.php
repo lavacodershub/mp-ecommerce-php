@@ -10,13 +10,10 @@ require __DIR__ .  '/vendor/autoload.php';
 MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-090914-5c508e1b02a34fcce879a999574cf5c9-469485398');
 $payment = MercadoPago\Payment::find_by_id($result["payment_id"]);
 
-$_SESSION['details'] = json_encode(array(
-    'payment_type' => $payment->payment_type_id,
-    'payment_method_id' => $payment->payment_method_id,
-    'amount' => $payment->transaction_amount,
-    'reference' => $payment->external_reference,
-    'payment_id' => $payment->id
-));
+$result['back_url'] .= '&method_id='.$payment->payment_method_id;
+$result['back_url'] .= '&type='.$payment->payment_type_id;
+$result['back_url'] .= '&amount='.$payment->transaction_amount;
+$result['back_url'] .= '&pid='.$payment->id;
 
 $fp = fopen('orders.txt', 'a');
 fwrite($fp, 'Compra: '.$result['external_reference'].PHP_EOL);
