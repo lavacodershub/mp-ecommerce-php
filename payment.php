@@ -5,14 +5,12 @@ require __DIR__ .  '/vendor/autoload.php';
 
 MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-090914-5c508e1b02a34fcce879a999574cf5c9-469485398');
 
-if (isset($_GET['type'])) {
-    $type = @$_GET['type'];
-    $id = @$_GET['id'];
-}
-else {
-    $type = @$_POST['type'];
-    $id = @$_POST['id'];
-}
+$fp = fopen('log.txt', 'a');
+fwrite($fp, var_export($_GET, true));
+fclose($fp);
+
+$type = $_GET['topic'];
+$id = $_GET['id'];
 
 $payment = FALSE;
 switch($type) {
@@ -23,7 +21,7 @@ switch($type) {
 
 if ($payment) {
     $fp = fopen('payments.txt', 'a');
-    fwrite($fp, "Payment ID: ".$_POST['id'].PHP_EOL);
+    fwrite($fp, "Payment ID: ".$id.PHP_EOL);
     fwrite($fp, "Compra: ".$payment->external_reference.PHP_EOL);
     fwrite($fp, "Type: ".$payment->operation_type.PHP_EOL);
     fwrite($fp, "Status: ".$payment->status.PHP_EOL);

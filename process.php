@@ -17,7 +17,7 @@ $result['back_url'] .= '&pid='.$payment->id;
 
 $fp = fopen('orders.txt', 'a');
 fwrite($fp, 'Compra: '.$result['external_reference'].PHP_EOL);
-fwrite($fp, 'Fecha: '.date('Y-m-d h:i:s a', time())).PHP_EOL;
+fwrite($fp, 'Fecha: '.date('Y-m-d h:i:s a', time()).PHP_EOL);
 fwrite($fp, 'Merchant Order ID: '.$result['merchant_order_id'].PHP_EOL);
 fwrite($fp, 'Payment ID: '.$result['payment_id'].PHP_EOL);
 fwrite($fp, 'Payment Status: '.$result['payment_status'].PHP_EOL);
